@@ -26,10 +26,6 @@ get '/demo.css' do
   sass :demo
 end
 
-get '/exception' do
-  raise 'error'
-end
-
 get '/:evil' do
   pass unless params[:evil] =~ /evil/i
   status 404
