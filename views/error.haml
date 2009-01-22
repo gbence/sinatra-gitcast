@@ -1,0 +1,5 @@
+%p.huge.red Exception catched!
+%p.red== #{exception.message} (#{exception.class})
+%ol
+  - exception.backtrace.each do |line|
+    %li= line
