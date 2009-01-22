@@ -3,6 +3,14 @@
 require 'rubygems'
 require 'sinatra'
 
+configure :development do
+  set :mode, 'development'
+end
+
+configure :production do
+  set :mode, 'production'
+end
+
 not_found do
   status 404
   haml :not_found
@@ -24,6 +32,10 @@ end
 get '/demo.css' do
   content_type 'text/css', :charset => 'utf-8'
   sass :demo
+end
+
+get '/about' do
+  erb %{<html><head><title>About</title></head><body>Sinatra #{Sinatra::VERSION} is running in #{options.mode} mode.</body></html>}
 end
 
 get '/:evil' do
