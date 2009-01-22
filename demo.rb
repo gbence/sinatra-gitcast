@@ -4,7 +4,8 @@ require 'rubygems'
 require 'sinatra'
 
 get '/' do
-  haml :index, :locals => { :name => 'world' }
+  redirect "/#{params[:name]}" if params[:name]
+  haml :query
 end
 
 get '/demo.css' do
@@ -13,5 +14,5 @@ get '/demo.css' do
 end
 
 get '/:name' do
-  haml :index, :locals => { :name => params[:name] }
+  haml :hello_name, :locals => { :name => params[:name] }
 end
