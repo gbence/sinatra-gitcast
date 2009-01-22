@@ -1,16 +1,22 @@
 #!/usr/bin/env ruby
 
-require 'rubygems'
-require 'sinatra'
+%w( rubygems haml dm-core dm-serializer dm-timestamps sinatra ).each { |lib| require lib }
 
-enable :sessions
+class Member
+  include DataMapper::Resource
+  property :id, Serial
+  property :name, String
+end
 
 configure :development do
   set :mode, 'development'
+  DataMapper.setup(:default, :adapter => 'sqlite3', :database => 'db/development.sqlite3')
+  DataMapper.auto_migrate!
 end
 
 configure :production do
   set :mode, 'production'
+  DataMapper.setup(:default, :adapter => 'sqlite3', :database => 'db/development.sqlite3')
 end
 
 not_found do
@@ -28,6 +34,7 @@ get '/' do
 end
 
 post '/' do
+  Member.create :name => params[:name]
   redirect "/#{params[:name]}"
 end
 
@@ -47,7 +54,6 @@ get '/:evil' do
 end
 
 get '/:name' do
-  (session[:history] ||= []) << params[:name]
-  haml :hello_name, :locals => { :name => params[:name] }
+  haml :hello_name, :locals => { :name => params[:name], :historical_names => Member.all.map { |m| m.name } }
 end
 
