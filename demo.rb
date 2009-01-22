@@ -3,6 +3,10 @@
 require 'rubygems'
 require 'sinatra'
 
+template :index do
+  '%p Hello world!'
+end
+
 get '/' do
-  haml '%p Hello world!'
+  haml :index
 end
