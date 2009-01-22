@@ -1,1 +1,3 @@
 %p== Hello #{name}!
+- if session[:history]
+  %p== We already have said hello to #{(session[:history] || [])[0...-1].map { |n| %{<a href="/#{n}">#{n}</a>} }.join(', ')}.

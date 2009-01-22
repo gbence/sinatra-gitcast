@@ -3,6 +3,8 @@
 require 'rubygems'
 require 'sinatra'
 
+enable :sessions
+
 configure :development do
   set :mode, 'development'
 end
@@ -45,6 +47,7 @@ get '/:evil' do
 end
 
 get '/:name' do
+  (session[:history] ||= []) << params[:name]
   haml :hello_name, :locals => { :name => params[:name] }
 end
 
