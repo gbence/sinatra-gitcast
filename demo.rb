@@ -4,5 +4,5 @@ require 'rubygems'
 require 'sinatra'
 
 get '/' do
-  'Hello world!'
+  haml '%p Hello world!'
 end
