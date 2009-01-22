@@ -16,6 +16,12 @@ get '/demo.css' do
   sass :demo
 end
 
+get '/:evil' do
+  pass unless params[:evil] =~ /evil/i
+  status 404
+  "404 - Not found"
+end
+
 get '/:name' do
   haml :hello_name, :locals => { :name => params[:name] }
 end
