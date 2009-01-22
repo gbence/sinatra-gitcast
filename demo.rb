@@ -4,8 +4,11 @@ require 'rubygems'
 require 'sinatra'
 
 get '/' do
-  redirect "/#{params[:name]}" if params[:name]
   haml :query
+end
+
+post '/' do
+  redirect "/#{params[:name]}"
 end
 
 get '/demo.css' do
